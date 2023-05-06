@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 from markovchain.text import MarkovText
-
+import markovify
 
 def generate_chorus(data_path="data/jacques_chirac_quotes.csv") -> str:
     if not os.path.exists(data_path):
@@ -39,3 +39,17 @@ class JacquesChiracSpeechModel:
     def generate_sentence(self):
         return self.model(max_length=20)
 
+
+def JacquesChiracSpeechModel2:
+    def __init__(self, chorus=None):
+        self.chorus = chorus
+        self.model = markovify.Text(chorus, state_size=3)
+
+    def get_model(self):
+        return self.model
+
+    def get_chorus(self):
+        return self.chorus
+
+    def compile(self):
+        self.model.compile()
