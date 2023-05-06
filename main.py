@@ -1,4 +1,8 @@
 import argparse
+from src.models import (
+    JacquesChiracSpeechModel,
+    generate_chorus,
+)
 
 
 parser = argparse.ArgumentParser(
@@ -16,6 +20,7 @@ parser.add_argument(
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.dev:
-        print("Dev mode.")
+        jcsm = JacquesChiracSpeechModel(model_path="data/model_jcsm.json", chorus=generate_chorus())
+        print(jcsm.generate_sentence())
     else:
         print("Production mode.")

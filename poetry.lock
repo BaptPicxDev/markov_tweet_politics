@@ -197,6 +197,18 @@ tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.1
 toml = ["tomli"]
 
 [[package]]
+name = "custom-inherit"
+version = "2.4.1"
+description = "A Python package that provides customized docstring inheritance       schemes between derived classes and their parents."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "custom_inherit-2.4.1-py3-none-any.whl", hash = "sha256:313f9594d98e79a7fbf58d9ad368fd29adc97572d886975dbd8c7032b14abc6a"},
+    {file = "custom_inherit-2.4.1.tar.gz", hash = "sha256:7052eb337bcce83551815264391cc4efc2bf70b295a3c52aba64f1ab57c3a8a2"},
+]
+
+[[package]]
 name = "dill"
 version = "0.3.6"
 description = "serialize all of python"
@@ -210,6 +222,19 @@ files = [
 
 [package.extras]
 graph = ["objgraph (>=1.7.2)"]
+
+[[package]]
+name = "enum34"
+version = "1.1.10"
+description = "Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "enum34-1.1.10-py2-none-any.whl", hash = "sha256:a98a201d6de3f2ab3db284e70a33b0f896fbf35f8086594e8c9e74b909058d53"},
+    {file = "enum34-1.1.10-py3-none-any.whl", hash = "sha256:c3858660960c984d6ab0ebad691265180da2b43f07e061c0f8dca9ef3cffd328"},
+    {file = "enum34-1.1.10.tar.gz", hash = "sha256:cce6a7477ed816bd2542d03d53db9f0db935dd013b70f336a95c73979289f248"},
+]
 
 [[package]]
 name = "exceptiongroup"
@@ -333,6 +358,27 @@ files = [
     {file = "lazy_object_proxy-1.9.0-cp39-cp39-win32.whl", hash = "sha256:9090d8e53235aa280fc9239a86ae3ea8ac58eff66a705fa6aa2ec4968b95c821"},
     {file = "lazy_object_proxy-1.9.0-cp39-cp39-win_amd64.whl", hash = "sha256:db1c1722726f47e10e0b5fdbf15ac3b8adb58c091d12b3ab713965795036985f"},
 ]
+
+[[package]]
+name = "markovchain"
+version = "0.2.6"
+description = "Markov chain generator"
+category = "main"
+optional = false
+python-versions = ">=3"
+files = [
+    {file = "markovchain-0.2.6-py3-none-any.whl", hash = "sha256:fd930b5766b8373207e7df58c88d679fbad95ef1209e4e2fb665851ac823d694"},
+    {file = "markovchain-0.2.6.tar.gz", hash = "sha256:3272ce4202d9a0332ebefa80042a8788eca7640f944f0a54d07acec80f5dac8d"},
+]
+
+[package.dependencies]
+custom-inherit = "*"
+enum34 = "*"
+tqdm = "*"
+
+[package.extras]
+dev = ["coverage", "pillow", "pytest", "pytest-mock", "sphinx", "sphinx-rtd-theme", "twine", "wheel"]
+image = ["pillow"]
 
 [[package]]
 name = "mccabe"
@@ -852,4 +898,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "575efd075251c751aad7ff005ca9ceb2c376fe552a8b6afc3150d3cbfb6dc1d8"
+content-hash = "9885821884a07a307d964084261111339d5da288985f08f42c5a4929bdbc801e"

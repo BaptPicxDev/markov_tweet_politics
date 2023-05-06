@@ -25,6 +25,8 @@ add-production-packages:
 	echo "Adding production packages"
 	poetry add pandas
 	poetry add numpy
+	poetry add markovchain
+	poetry add kaggle
 
 .PHONY: add-dev-packages ## Add dev package to pyproject.toml(from pypi.org) using poetry
 add-dev-packages:
