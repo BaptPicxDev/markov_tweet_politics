@@ -10,6 +10,7 @@ packages = [{include = "poetry_test"}]
 python = "^3.9"
 pandas = "^2.0.0"
 numpy = "^1.24.2"
+kaggle = "^1.5.13"
 
 
 [tool.poetry.group.dev.dependencies]

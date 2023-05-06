@@ -52,6 +52,18 @@ run:
 run-dev:
 	poetry run python3 main.py --dev
 
+.PHONY: get-dataset ## Recover dataset from kaggle
+get-dataset:
+	mkdir -p data/
+	if [ -f "data/jacques-chirac-quotes.zip" ]; then
+		echo "Removing data/jacques-chirac-quotes.zip file"
+		rm data/jacques-chirac-quotes.zip
+	fi
+	poetry run kaggle datasets download -d niscreed/jacques-chirac-quotes
+	mv jacques-chirac-quotes.zip data/jacques-chirac-quotes.zip
+	cd data
+	unzip -o jacques-chirac-quotes.zip
+
 .PHONY: clean-venv ## Clean virtual environment (local dev)
 clean-venv:
 	echo "Removing python3 virtual environment using poetry"
