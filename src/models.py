@@ -17,21 +17,14 @@ class JacquesChiracSpeechModel:
         if model_path:
             self.model = MarkovText.from_file(model_path)
         else:
-            self.model = MarkovText()
             if not chorus:
                 raise ValueError("You should provide a chorus.")
-            self.chorus = chorus
-            self.train_model()
+            self.model = MarkovText().data(chorus)
             self.save_model()
 
     def get_model(self):
         return self.model
 
-    def get_chorus(self):
-        return self.chorus
-
-    def train_model(self):
-        self.model.data(self.chorus)
 
     def save_model(self, model_path="data/model_jcsm.json"):
         self.model.save(model_path)
@@ -41,15 +34,15 @@ class JacquesChiracSpeechModel:
 
 
 def JacquesChiracSpeechModel2:
-    def __init__(self, chorus=None):
-        self.chorus = chorus
+    def __init__(self, model_path=None, chorus=None):
         self.model = markovify.Text(chorus, state_size=3)
+        self.compile()
 
     def get_model(self):
         return self.model
 
-    def get_chorus(self):
-        return self.chorus
-
     def compile(self):
         self.model.compile()
+
+    def generate_sentence(self):
+        return self.model.make_short_sentence(20)
