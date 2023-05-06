@@ -20,7 +20,7 @@ parser.add_argument(
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.dev:
-        jcsm = JacquesChiracSpeechModel(model_path="data/model_jcsm.json", chorus=generate_chorus())
+        jcsm = JacquesChiracSpeechModel(chorus=generate_chorus())
         print(jcsm.generate_sentence())
     else:
         print("Production mode.")

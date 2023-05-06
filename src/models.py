@@ -19,12 +19,12 @@ class JacquesChiracSpeechModel:
         else:
             if not chorus:
                 raise ValueError("You should provide a chorus.")
-            self.model = MarkovText().data(chorus)
+            self.model = MarkovText()
+            self.model.data(chorus)
             self.save_model()
 
     def get_model(self):
         return self.model
-
 
     def save_model(self, model_path="data/model_jcsm.json"):
         self.model.save(model_path)
@@ -33,10 +33,11 @@ class JacquesChiracSpeechModel:
         return self.model(max_length=20)
 
 
-def JacquesChiracSpeechModel2:
+class JacquesChiracSpeechModel2:
+    """Not working properly. More data are needed. actually ~150 sentences."""
     def __init__(self, model_path=None, chorus=None):
-        self.model = markovify.Text(chorus, state_size=3)
-        self.compile()
+        self.model = markovify.Text(chorus) #, state_size=3)
+        # self.compile()
 
     def get_model(self):
         return self.model
