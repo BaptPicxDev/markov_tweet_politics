@@ -3,6 +3,7 @@ from src.models import (
     JacquesChiracSpeechModel,
     generate_chorus,
 )
+from src.twitter_handler import post_tweet
 
 
 parser = argparse.ArgumentParser(
@@ -20,7 +21,8 @@ parser.add_argument(
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.dev:
-        jcsm = JacquesChiracSpeechModel(chorus=generate_chorus())
-        print(jcsm.generate_sentence())
+        # jcsm = JacquesChiracSpeechModel(chorus=generate_chorus())
+        # print(jcsm.generate_sentence())
+        post_tweet("Ninja")
     else:
         print("Production mode.")
