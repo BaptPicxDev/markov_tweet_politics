@@ -14,6 +14,7 @@ kaggle = "^1.5.13"
 markovchain = "^0.2.6"
 markovify = "^0.9.4"
 tweepy = "^4.14.0"
+requests = "^2.30.0"
 
 
 [tool.poetry.group.dev.dependencies]

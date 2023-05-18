@@ -4,11 +4,12 @@ import pandas as pd
 from markovchain.text import MarkovText
 import markovify
 
-def generate_chorus(data_path="data/jacques_chirac_quotes.csv") -> str:
-    if not os.path.exists(data_path):
-        raise FileNotFoundError(f"No such file: {data_path}.")
-    df = pd.read_csv(filepath_or_buffer=data_path, sep=";", usecols=["quote"])
-    return "\n".join(list(df.quote))
+def generate_chorus(data_paths=["data/jacques_chirac_quotes.csv", "data/jacques_chirac_speech.csv"]) -> str:
+    if not all(os.path.exists(data_path) for data_path in data_paths):
+        raise FileNotFoundError(f"No such file: {data_paths}.")
+    df_quotes = pd.read_csv(filepath_or_buffer=data_paths[0], sep=";", usecols=["quote"])
+    df_speechs = pd.read_csv(filepath_or_buffer=data_paths[1], sep=";", usecols=["speech"])
+    return " ".join(list(df_quotes.quote)) + " ".join(list(df_speechs.speech))
 
 
 
@@ -36,7 +37,7 @@ class JacquesChiracSpeechModel:
 class JacquesChiracSpeechModel2:
     """Not working properly. More data are needed. actually ~150 sentences."""
     def __init__(self, model_path=None, chorus=None):
-        self.model = markovify.Text(chorus) #, state_size=3)
+        self.model = markovify.Text(" ".join(chorus)[0].decode("utf-8")) #, state_size=3)
         # self.compile()
 
     def get_model(self):
@@ -46,4 +47,4 @@ class JacquesChiracSpeechModel2:
         self.model.compile()
 
     def generate_sentence(self):
-        return self.model.make_short_sentence(20)
+        return self.model.make_short_sentence(10)
