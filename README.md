@@ -12,6 +12,14 @@ This file replace several files in a usuall Python project:
 - setup.py
 - requirements.txt
 
+## Download docker-compose on AWS linux
+
+- https://stackoverflow.com/questions/63708035/installing-docker-compose-on-amazon-ec2-linux-2-9kb-docker-compose-file
+
+sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose version
+
 ## Documentation
 
 - https://python-poetry.org/

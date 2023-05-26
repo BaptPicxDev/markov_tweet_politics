@@ -27,6 +27,8 @@ add-production-packages:
 	poetry add numpy
 	poetry add markovchain
 	poetry add kaggle
+	poetry add fastapi
+	poetry add uvicorn
 
 .PHONY: add-dev-packages ## Add dev package to pyproject.toml(from pypi.org) using poetry
 add-dev-packages:
@@ -66,6 +68,31 @@ get-dataset:
 	cd data
 	unzip -o jacques-chirac-quotes.zip
 
+.PHONY: build-old
+build-old: ## Build using docker
+	sudo docker build -t docker_old -f deploy/Dockerfile .
+
+.PHONY: build
+build: ## Build using docker-compose
+	sudo docker-compose -p this_is_a_test -f deploy/docker-compose.yml up --detach
+
+.PHONY: stop
+stop: ## Stop and remove docker container
+	sudo docker-compose -p this_is_a_test -f deploy/docker-compose.yml down
+
+.PHONY: logs
+logs: ## Show logs
+	sudo docker logs -f my_app
+
 .PHONY: clean-venv ## Clean virtual environment (local dev)
 clean-venv:
 	echo "Removing python3 virtual environment using poetry"
+
+.PHONY: clean_docker_images ## RM docker container & remove docker images
+clean_docker_images:
+	sudo docker ps -a | awk '{print $14}' | xargs sudo docker rm
+	sudo docker images -a | awk '{print $3}' | xargs sudo docker rmi
+
+.PHONY: generate_requirements ## Generate requirements
+generate_requirements:
+	poetry export -f requirements.txt --without-hashes --without-urls > requirements.txt
