@@ -74,7 +74,7 @@ build-old: ## Build using docker
 
 .PHONY: build
 build: ## Build using docker-compose
-	sudo docker-compose -p this_is_a_test -f deploy/docker-compose.yml up --detach
+	sudo docker-compose -p this_is_a_test -f deploy/docker-compose.yml up -d --build
 
 .PHONY: stop
 stop: ## Stop and remove docker container
@@ -88,10 +88,13 @@ logs: ## Show logs
 clean-venv:
 	echo "Removing python3 virtual environment using poetry"
 
-.PHONY: clean_docker_images ## RM docker container & remove docker images
+.PHONY: clean_docker_images ## Clean docker images
 clean_docker_images:
-	sudo docker ps -a | awk '{print $14}' | xargs sudo docker rm
 	sudo docker images -a | awk '{print $3}' | xargs sudo docker rmi
+
+.PHONY: clean_docker_containers ## Clean docker containers
+clean_docker_containers:
+	sudo docker ps -a | awk '{print $14}' | xargs sudo docker rm
 
 .PHONY: generate_requirements ## Generate requirements
 generate_requirements:
