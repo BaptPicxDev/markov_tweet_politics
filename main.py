@@ -4,6 +4,7 @@ from src.models import (
     generate_chorus,
 )
 from src.twitter_handler import post_tweet2
+from src.wsgi import run_server
 
 
 parser = argparse.ArgumentParser(
@@ -16,6 +17,12 @@ parser.add_argument(
     action="store_true",
     help='Run the progam in development mode.',
 )
+parser.add_argument(
+    "-a",
+    "--api",
+    action="store_true",
+    help="Run the api",
+)
 
 
 if __name__ == "__main__":
@@ -27,5 +34,7 @@ if __name__ == "__main__":
         # df = pd.read_csv("data/jacques_chirac_speech.csv", sep=";")
         # print(df.head())
         # print(post_tweet2("Ninja"))
+    elif args.api:
+        run_server()
     else:
         print("Production mode.")
