@@ -70,11 +70,15 @@ get-dataset:
 
 .PHONY: build-old
 build-old: ## Build using docker
+	make generate_requirements
 	sudo docker build -t docker_old -f deploy/Dockerfile .
 
 .PHONY: build
 build: ## Build using docker-compose
+	make generate_requirements
+	cp .env deploy/
 	sudo docker-compose -p this_is_a_test -f deploy/docker-compose.yml up -d --build
+	rm deploy/.env
 
 .PHONY: stop
 stop: ## Stop and remove docker container
@@ -98,4 +102,5 @@ clean_docker_containers:
 
 .PHONY: generate_requirements ## Generate requirements
 generate_requirements:
+	echo "Generating requirements.txt file"
 	poetry export -f requirements.txt --without-hashes --without-urls > requirements.txt
