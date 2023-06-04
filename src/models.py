@@ -37,8 +37,7 @@ class JacquesChiracSpeechModel:
 class JacquesChiracSpeechModel2:
     """Not working properly. More data are needed. actually ~150 sentences."""
     def __init__(self, model_path=None, chorus=None):
-        self.model = markovify.Text(" ".join(chorus)[0].decode("utf-8")) #, state_size=3)
-        # self.compile()
+        self.model = markovify.Text(" ".join(chorus)[0], well_formed=True, reject_reg=' ', state_size=4)
 
     def get_model(self):
         return self.model
@@ -47,4 +46,10 @@ class JacquesChiracSpeechModel2:
         self.model.compile()
 
     def generate_sentence(self):
-        return self.model.make_short_sentence(10)
+        return self.model.make_short_sentence(50, tries=100)
+
+
+if __name__ == "__main__":
+    model = JacquesChiracSpeechModel2(chorus=generate_chorus())
+    generated_sentence = model.generate_sentence()
+    print(generated_sentence)

@@ -18,6 +18,8 @@ requests = "^2.30.0"
 fastapi = "^0.95.2"
 uvicorn = "^0.22.0"
 discord = "^2.2.3"
+python-dotenv = "^1.0.0"
+nltk = "^3.8.1"
 
 
 [tool.poetry.group.dev.dependencies]

@@ -3,7 +3,7 @@ from src.models import (
     JacquesChiracSpeechModel,
     generate_chorus,
 )
-from src.twitter_handler import post_tweet2
+from src.discord_bot import DiscordBot
 from src.wsgi import run_server
 
 
@@ -23,18 +23,22 @@ parser.add_argument(
     action="store_true",
     help="Run the api",
 )
-
+parser.add_argument(
+    "-b",
+    "--bot",
+    action="store_true",
+    help="Run the bod",
+)
 
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.dev:
         jcsm = JacquesChiracSpeechModel(chorus=generate_chorus())
         print(jcsm.generate_sentence())
-        # import pandas as pd
-        # df = pd.read_csv("data/jacques_chirac_speech.csv", sep=";")
-        # print(df.head())
-        # print(post_tweet2("Ninja"))
     elif args.api:
         run_server()
+    elif args.bot:
+        bot = DiscordBot()
+        bot.run()
     else:
         print("Production mode.")
