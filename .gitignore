@@ -5,5 +5,5 @@ data/
 requirements.txt
 *.pyt
 .env
-
-.coverage
+poetry.lock
+.coverage*

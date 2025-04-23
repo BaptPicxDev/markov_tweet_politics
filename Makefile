@@ -11,37 +11,11 @@ help:
 .PHONY: build-venv ## Create virtual environment and install requirements (local dev)
 build-venv:
 	echo "Creating python3 virtual environment with poetry"
+	export POETRY_CACHE_DIR=.cache
 	poetry config virtualenvs.in-project true
-	if [ ! -f pyproject.tml ]; then
-		echo "Generating pyproject.toml file."
-		poetry init -n
-	fi
-	make add-production-packages
-	make add-dev-packages
-	make check-dependencies
+	poetry config virtualenvs.path .venv
+	poetry install
 
-.PHONY: add-production-packages ## Add production package to pyproject.toml (from pypi.org) using poetry
-add-production-packages:
-	echo "Adding production packages"
-	poetry add pandas
-	poetry add numpy
-	poetry add markovchain
-	poetry add kaggle
-	poetry add fastapi
-	poetry add uvicorn
-
-.PHONY: add-dev-packages ## Add dev package to pyproject.toml(from pypi.org) using poetry
-add-dev-packages:
-	echo "Installing dev packages"
-	poetry add --group dev pytest
-	poetry add --group dev pytest-cov
-	poetry add --group dev pytest-mock
-	poetry add --group dev pylint
-
-.PHONY: check-dependencies ## Ensure that all dependencies are installed
-check-dependencies:
-	echo "Ensure dependencies are installed"
-	poetry check
 
 .PHONY: run-pytest ## Run pytest using pytest
 run-pytest:

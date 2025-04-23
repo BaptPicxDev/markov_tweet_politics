@@ -18,12 +18,6 @@ parser.add_argument(
     help='Run the progam in development mode.',
 )
 parser.add_argument(
-    "-a",
-    "--api",
-    action="store_true",
-    help="Run the api",
-)
-parser.add_argument(
     "-b",
     "--bot",
     action="store_true",
@@ -35,8 +29,6 @@ if __name__ == "__main__":
     if args.dev:
         jcsm = JacquesChiracSpeechModel(chorus=generate_chorus())
         print(jcsm.generate_sentence())
-    elif args.api:
-        run_server()
     elif args.bot:
         bot = DiscordBot()
         bot.run()
