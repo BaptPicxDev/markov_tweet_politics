@@ -1,5 +1,5 @@
 import os
-
+import re
 import pandas as pd
 from markovchain.text import MarkovText
 import markovify
@@ -11,6 +11,25 @@ def generate_chorus(data_paths=["data/jacques_chirac_quotes.csv", "data/jacques_
     df_speechs = pd.read_csv(filepath_or_buffer=data_paths[1], sep=";", usecols=["speech"])
     return " ".join(list(df_quotes.quote)) + " ".join(list(df_speechs.speech))
 
+
+def generate_corpus(folder_path="lyrics") -> str:
+    """Reading all the files .txt from the folder.
+    Assemble the data to generate a corpus.
+    """
+    corpus = "" 
+    for file in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, file)
+        with open(file_path, "r") as fh:
+            corpus += fh.read() + "\n"
+    return corpus
+
+
+def text_cleaner(text):
+  text = re.sub(r'--', ' ', text)
+  text = re.sub('[\[].*?[\]]', '', text)
+  text = re.sub(r'(\b|\s+\-?|^\-?)(\d+|\d*\.\d+)\b','', text)
+  text = ' '.join(text.split())
+  return text
 
 
 class JacquesChiracSpeechModel:
@@ -30,14 +49,14 @@ class JacquesChiracSpeechModel:
     def save_model(self, model_path="data/model_jcsm.json"):
         self.model.save(model_path)
 
-    def generate_sentence(self):
-        return self.model(max_length=20)
+    def generate_sentence(self, max_length=10):
+        return self.model(max_length=max_length)
 
 
 class JacquesChiracSpeechModel2:
     """Not working properly. More data are needed. actually ~150 sentences."""
     def __init__(self, model_path=None, chorus=None):
-        self.model = markovify.Text(" ".join(chorus)[0], well_formed=True, reject_reg=' ', state_size=4)
+        self.model = markovify.Text(chorus, well_formed=True, reject_reg=' ', state_size=4)
 
     def get_model(self):
         return self.model
@@ -50,6 +69,9 @@ class JacquesChiracSpeechModel2:
 
 
 if __name__ == "__main__":
-    model = JacquesChiracSpeechModel2(chorus=generate_chorus())
-    generated_sentence = model.generate_sentence()
-    print(generated_sentence)
+    corpus = generate_corpus(folder_path="speeches")
+    corpus += " "
+    corpus += generate_corpus(folder_path="lyrics")
+    clean_corpus = text_cleaner(corpus)
+    JCS = JacquesChiracSpeechModel(chorus=clean_corpus)
+    print(JCS.generate_sentence(max_length=12))

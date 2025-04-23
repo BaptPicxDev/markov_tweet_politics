@@ -7,3 +7,4 @@ requirements.txt
 .env
 poetry.lock
 .coverage*
+.DS_store
